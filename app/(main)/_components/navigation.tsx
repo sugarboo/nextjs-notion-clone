@@ -7,6 +7,7 @@ import { ElementRef, useEffect, useRef, useState } from "react";
 import { ChevronsLeft, MenuIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import UserItem from "./user-item";
 
 const Navigation = () => {
   const pathname = usePathname();
@@ -107,7 +108,7 @@ const Navigation = () => {
         <div
           role="button"
           className={cn(
-            `absolute top-3 right-2 h-6 w-6 text-muted-foreground rounded-sm opacity-0 hover:bg-neutral-[${NAVIGATION_COLLAPSE_ANIMATION_DURATION}] dark:hover:bg-neutral-600 group-hover/sidebar:opacity-100 transition`,
+            `absolute top-[26px] right-2 h-6 w-6 text-muted-foreground rounded-sm opacity-0 hover:bg-neutral-[${NAVIGATION_COLLAPSE_ANIMATION_DURATION}] dark:hover:bg-neutral-600 group-hover/sidebar:opacity-100 transition`,
             isMobile && "opacity-100"
           )}
           onClick={collapse}
@@ -115,7 +116,7 @@ const Navigation = () => {
           <ChevronsLeft />
         </div>
         <div className="mt-4">
-          <p>Action Items</p>
+          <UserItem />
         </div>
         <div className="mt-4">
           <p>Documents</p>
