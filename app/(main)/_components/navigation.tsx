@@ -9,7 +9,12 @@ import { ChevronsLeft, MenuIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import UserItem from "./user-item";
 
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
 const Navigation = () => {
+  const documents = useQuery(api.documents.get);
+
   const pathname = usePathname();
 
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -118,8 +123,14 @@ const Navigation = () => {
         <div className="mt-4">
           <UserItem />
         </div>
-        <div className="mt-4">
-          <p>Documents</p>
+        <div className="px-4 space-y-2">
+          {
+            documents?.map((document) => (
+                <p key={document._id}>
+                  {document.title}
+                </p>
+            ))
+          }
         </div>
         <div
           className="absolute right-0 top-0 opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize h-full w-1 bg-primary/10"
