@@ -1,4 +1,4 @@
-import { Doc } from "@/convex/_generated/dataModel";
+import { Doc, Id } from "@/convex/_generated/dataModel";
 import { toast } from "sonner";
 
 const createDocument = (create: Function, document?: Pick<Doc<"documents">, "parentDocument">) => {
@@ -16,6 +16,18 @@ const createDocument = (create: Function, document?: Pick<Doc<"documents">, "par
   return promise;
 }
 
+const archiveDocument = (archive: Function, id: Id<"documents">) => {
+  
+  const promise = archive({ id });
+
+  toast.promise(promise, {
+    loading: "Moving to trash...",
+    success: "Note moved to trash!",
+    error: "Failed to archive note..."
+  });
+}
+
 export {
-  createDocument
+  createDocument,
+  archiveDocument
 }
