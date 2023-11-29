@@ -6,23 +6,14 @@ import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button"; 
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { toast } from "sonner";
+import { createDocument } from "../../_api/documents";
 
 const DocumentsPage = () => {
   const { user }  = useUser();
 
   const create = useMutation(api.documents.create);
-
   const onCreate = () => {
-    const promise = create({
-      title: `Untitled - ${Math.floor(Math.random() * 9000) + 1000}`
-    })
-    
-    toast.promise(promise, {
-      loading: "Creating a new note...",
-      success: "New note created!",
-      error: "Failed to create note. please try again later..."
-    })
+    createDocument(create)
   }
 
   return (

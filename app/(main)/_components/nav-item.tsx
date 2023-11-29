@@ -1,8 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
-import { ChevronDown, ChevronRight, LucideIcon } from "lucide-react";
+import { ChevronDown, ChevronRight, LucideIcon, Plus } from "lucide-react";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { createDocument } from "../_api/documents";
 
 interface ItemProps {
   id?: Id<"documents">;
@@ -29,11 +34,31 @@ const NavItem = ({
   onClick,
   icon: Icon
 }: ItemProps) => {
-  const ChevronIcon = expanded ? ChevronDown : ChevronRight
+  const router = useRouter();
+  const create = useMutation(api.documents.create);
+  const onCreate = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+    if(!id) return
+    createDocument(create, { parentDocument: id }).then(() => {
+      if (!expanded) {
+        onExpand?.();
+      }
+    });
+  }
+
+  const handleExpand = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+    onExpand?.();
+  }
+
+  const ChevronIcon = expanded ? ChevronDown : ChevronRight;
 
   return (
     <div
       role="button"
+      style={{ 
+        paddingLeft: level ? `${(level * 12) + 12}px` : "12px"
+      }}
       className={cn(
         "group flex items-center w-full min-h-[27px] py-1 pr-3 text-sm font-medium hover:bg-primary/5 text-muted-foreground",
         active && "text-primary bg-primary/5"
@@ -43,10 +68,12 @@ const NavItem = ({
       {!!id && (
         <div
           role="button"
-          className="h-full mr-1 rounded-sm bg-neutral-300 dark:bg-neutral-600"
-          onClick={() => {}}
+          className="h-full rounded-sm hover:bg-neutral-300 dark:bg-neutral-600 mr-1"
+          onClick={handleExpand}
         >
-          <ChevronIcon className="w-4 h-4 shrink-0 text-muted-foreground" />
+          <ChevronIcon
+            className="h-4 w-4 shrink-0 text-muted-foreground/50"
+          />
         </div>
       )}
       {documentIcon ? (
@@ -68,8 +95,36 @@ const NavItem = ({
           </span>
         </kbd>
       )}
+      {!!id && (
+        <div className="flex items-center gap-x-2 ml-auto">
+          <div
+            role="button"
+            className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+            onClick={onCreate}
+          >
+            <Plus className="w-4 h-4 text-muted-foreground" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+const NavItemSkeleton = ({
+  level  
+}: {
+  level?: number
+}) => {
+  return (
+    <div
+      style={{paddingLeft: level ? `${(level * 12) + 25}px` : "12px"}}
+      className="flex gap-x-2 py-[3px]"
+    >
+      <Skeleton className="w-4 h-4" />
+      <Skeleton className="w-[30%] h-4" />
+    </div>
+  )
+}
+NavItem.Skeleton = NavItemSkeleton;
  
 export default NavItem;

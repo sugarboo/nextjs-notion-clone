@@ -13,6 +13,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import NavItem from "./nav-item";
+import DocumentList from "./document-list";
 
 const Navigation = () => {
   const documents = useQuery(api.documents.get);
@@ -154,15 +155,7 @@ const Navigation = () => {
             onClick={handleCreate}
           />
         </div>
-        <div className="px-4 space-y-2">
-          {
-            documents?.map((document) => (
-              <p key={document._id}>
-                {document.title}
-              </p>
-            ))
-          }
-        </div>
+        <DocumentList />
         <div
           className="absolute right-0 top-0 opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize h-full w-1 bg-primary/10"
           onMouseDown={handleMouseDown}
