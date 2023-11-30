@@ -1,7 +1,7 @@
 import { Doc, Id } from "@/convex/_generated/dataModel";
 import { toast } from "sonner";
 
-const createDocument = (create: Function, document?: Pick<Doc<"documents">, "parentDocument">) => {
+const createDocument = (create: Function, document?: Partial<Doc<"documents">>) => {
   const promise = create({
     ...document,
     title: `Untitled - ${Math.floor(Math.random() * 9000) + 1000}`
@@ -25,9 +25,35 @@ const archiveDocument = (archive: Function, id: Id<"documents">) => {
     success: "Note moved to trash!",
     error: "Failed to archive note..."
   });
+
+  return promise;
+}
+
+const restoreDocument = (restore: Function, id: Id<"documents">) => {
+  const promise = restore({ id });
+
+  toast.promise(promise, {
+    loading: "Restoring note...",
+    success: "Note restored!",
+    error:" Failed to restore note."
+  });
+}
+
+const removeDocument = (remove: Function, id: Id<"documents">) => {
+  const promise = remove({ id });
+
+  toast.promise(promise, {
+    loading: "Deleting note...",
+    success: "Note deleted!",
+    error:" Failed to delete note."
+  });
+
+  return promise;
 }
 
 export {
   createDocument,
-  archiveDocument
+  archiveDocument,
+  restoreDocument,
+  removeDocument
 }

@@ -3,7 +3,7 @@ import Logo from "./logo";
 
 const Footer = () => {
   return (
-    <div className="flex items-center w-full p-6 z-50 bg-background dark:bg-[#1F1F1F]">
+    <div className="flex items-center w-full p-6 z-[99999] bg-background dark:bg-[#1F1F1F]">
       <div className="hidden md:block">
         <Logo />
       </div>

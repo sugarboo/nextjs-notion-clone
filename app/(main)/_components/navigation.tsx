@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation"
 
 import { useMediaQuery } from "usehooks-ts";
 import { ElementRef, useEffect, useRef, useState } from "react";
-import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings, Trash } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import UserItem from "./user-item";
@@ -14,6 +14,12 @@ import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import NavItem from "./nav-item";
 import DocumentList from "./document-list";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import Trashcan from "./trashcan";
 
 const Navigation = () => {
   const documents = useQuery(api.documents.get);
@@ -156,6 +162,17 @@ const Navigation = () => {
           />
         </div>
         <DocumentList />
+        <Popover>
+          <PopoverTrigger className="w-full mt-4">
+            <NavItem label="Trash" icon={Trash} />
+          </PopoverTrigger>
+          <PopoverContent
+            side={isMobile ? "bottom" : "right"}
+            className="w-72 p-0"
+          >
+            <Trashcan />
+          </PopoverContent>
+        </Popover>
         <div
           className="absolute right-0 top-0 opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize h-full w-1 bg-primary/10"
           onMouseDown={handleMouseDown}
