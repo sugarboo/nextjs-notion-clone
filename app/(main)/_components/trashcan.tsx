@@ -76,7 +76,7 @@ const Trashcan = () => {
             <span className="pl-2 truncate">
               {document.title}
             </span>
-            <div className="flex items-center">
+            <div className="flex items-center" onClick={(e) => onRestore(e, document._id)}>
               <div className="p-2 rounded-sm hover:bg-neutral-200">
                 <Undo className="w-4 h-4 text-muted-foreground" />
               </div>

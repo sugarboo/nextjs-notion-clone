@@ -20,9 +20,9 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import Trashcan from "./trashcan";
+import { useSearch } from "@/hooks/use-search";
 
 const Navigation = () => {
-  const documents = useQuery(api.documents.get);
   const create = useMutation(api.documents.create);
 
   const pathname = usePathname();
@@ -121,6 +121,8 @@ const Navigation = () => {
       error: "Failed to create note. please try again later..."
     })
   }
+  
+  const search = useSearch();
 
   return (
     <>
@@ -148,7 +150,7 @@ const Navigation = () => {
             label="Search"
             icon={Search}
             isSearch
-            onClick={() => {}}
+            onClick={search.onOpen}
           />
           <NavItem
             label="Settings"
