@@ -77,11 +77,11 @@ const Trashcan = () => {
               {document.title}
             </span>
             <div className="flex items-center" onClick={(e) => onRestore(e, document._id)}>
-              <div className="p-2 rounded-sm hover:bg-neutral-200">
+              <div className="p-2 rounded-sm hover:bg-neutral-200 dark:hover:bg-neutral-600">
                 <Undo className="w-4 h-4 text-muted-foreground" />
               </div>
               <ConfirmModal onConfirm={() => onRemove(document._id)}>
-                <div className="p-2 rounded-sm hover:bg-neutral-200">
+                <div className="p-2 rounded-sm hover:bg-neutral-200 dark:hover:bg-neutral-600">
                   <Trash className="w-4 h-4 text-muted-foreground" />
                 </div>
               </ConfirmModal>

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/popover";
 import Trashcan from "./trashcan";
 import { useSearch } from "@/hooks/use-search";
+import { useSettings } from "@/hooks/use-settings";
 
 const Navigation = () => {
   const create = useMutation(api.documents.create);
@@ -123,6 +124,7 @@ const Navigation = () => {
   }
   
   const search = useSearch();
+  const settings = useSettings();
 
   return (
     <>
@@ -155,7 +157,7 @@ const Navigation = () => {
           <NavItem
             label="Settings"
             icon={Settings}
-            onClick={() => {}}
+            onClick={settings.onOpen}
           />
           <NavItem
             label="New page"
