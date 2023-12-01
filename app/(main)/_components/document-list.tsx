@@ -35,7 +35,7 @@ const DocumentList = ({
   })
 
   const onRedirect = (documentId: string) => {
-    // router.push(`/documents/${documentId}`)
+    router.push(`/documents/${documentId}`)
   }
 
   // when documents query is loading
