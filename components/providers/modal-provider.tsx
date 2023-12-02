@@ -1,17 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+
+import { useUser } from "@clerk/clerk-react";
+
 import SettingsModal from "../base/settings-modal";
 import SearchCommand from "../base/search-command";
-import { useUser } from "@clerk/clerk-react";
 
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const user = useUser();
 
+  const pathname = usePathname();
   const needSearchCommand = () => {
-    const { pathname } = location;
     return pathname.toLocaleLowerCase().includes('documents');
   }
 
