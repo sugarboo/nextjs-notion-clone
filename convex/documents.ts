@@ -91,9 +91,7 @@ export const getById = query({
       throw new Error("Unauthorized");
     }
 
-    if (document.isPublished && !document.isArchived) {
-      return document;
-    }
+    return document;
   }
 })
 
