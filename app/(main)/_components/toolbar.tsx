@@ -10,6 +10,7 @@ import IconPicker from "./icon-picker";
 import { Button } from "@/components/ui/button";
 import { Smile, X } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
+import { useCoverImage } from "@/hooks/use-cover-image";
 
 interface ToolbarProps {
   initialData: Doc<"documents">;
@@ -20,6 +21,7 @@ const Toolbar = ({
   initialData,
   isPreview = false
 }: ToolbarProps) => {
+  const coverImageHook = useCoverImage();
   const inputRef = useRef<ElementRef<"textarea">>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialData.title);
@@ -111,7 +113,7 @@ const Toolbar = ({
             variant="outline"
             size="sm"
             className="text-muted-foreground text-xs"
-            onClick={() => {}}
+            onClick={coverImageHook.onOpen}
           >
             Add cover
           </Button>

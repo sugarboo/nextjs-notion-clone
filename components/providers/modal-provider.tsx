@@ -7,6 +7,7 @@ import { useUser } from "@clerk/clerk-react";
 
 import SettingsModal from "../base/settings-modal";
 import SearchCommand from "../base/search-command";
+import CoverImageModal from "../base/cover-image-modal";
 
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -31,7 +32,13 @@ const ModalProvider = () => {
       {user?.isSignedIn && needSearchCommand() &&
         <SearchCommand />
       }
-      <SettingsModal />
+      {
+        user?.isSignedIn && (
+          <>
+            <CoverImageModal />
+            <SettingsModal />
+          </>
+      )}
     </>
   );
 }

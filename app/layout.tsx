@@ -8,6 +8,7 @@ import ModalProvider from '@/components/providers/modal-provider'
 import { Toaster } from 'sonner'
 
 import './globals.css'
+import { EdgeStoreProvider } from '@/lib/edgestore'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,17 +38,19 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ConvexClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-            storageKey="notion-clone-theme"
-            >
-            {children}
-            <Toaster position="bottom-center" />
-            <ModalProvider />
-          </ThemeProvider>
+          <EdgeStoreProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+              storageKey="notion-clone-theme"
+              >
+              {children}
+              <Toaster position="bottom-center" />
+              <ModalProvider />
+            </ThemeProvider>
+          </EdgeStoreProvider>
         </ConvexClientProvider>
       </body>
     </html>
