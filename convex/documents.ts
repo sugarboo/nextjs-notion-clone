@@ -75,20 +75,10 @@ export const getSearch = query({
 export const getById = query({
   args: { id: v.id("documents") },
   handler: async(ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) {
-      throw new Error("Not authenticated");
-    }
-
     const document = await ctx.db.get(args.id);
-
+    
     if (!document) {
       throw new Error("Not found");
-    }
-
-    const userId = identity.subject;
-    if (document.userId !== userId) {
-      throw new Error("Unauthorized");
     }
 
     return document;
@@ -114,7 +104,7 @@ export const create = mutation({
       parentDocument: args.parentDocument,
       userId,
       isArchived: false,
-      isPublished: true
+      isPublished: false
     });
 
     return document;
