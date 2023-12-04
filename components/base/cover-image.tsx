@@ -11,6 +11,7 @@ import { Id } from "@/convex/_generated/dataModel";
 
 import { Button } from "../ui/button";
 import { ImageIcon, X } from "lucide-react";
+import { useEdgeStore } from "@/lib/edgestore";
 
 interface CoverImageProps {
   url?: string,
@@ -23,17 +24,29 @@ const CoverImage = ({
 }: CoverImageProps) => {
   const params = useParams();
 
+  const { edgestore } = useEdgeStore();
   const coverImageHook = useCoverImage();
 
-  const onChangeCover = () => {
+  const onReplace = () => {
     coverImageHook.onOpen();
+    url && coverImageHook.onReplace(url);
   }
 
   const removeCoverImage = useMutation(api.documents.removeCoverImage);
-  const onRemove = () => {
-    removeCoverImage({
-      id: params.documentId as Id<"documents">
-    });
+  const onRemove = async() => {
+    try {
+      if (url) {
+        await edgestore.publicFiles.delete({
+          url
+        })
+      }
+    } catch (error){
+      console.log(error);
+    } finally {
+      removeCoverImage({
+        id: params.documentId as Id<"documents">
+      });
+    }
   }
 
   return (
@@ -56,7 +69,7 @@ const CoverImage = ({
             variant="outline"
             size="sm"
             className="text-xs text-muted-foreground"
-            onClick={onChangeCover}
+            onClick={onReplace}
           >
             <ImageIcon className="w-4 h-4 mr-2" />
             <span>Change cover</span>

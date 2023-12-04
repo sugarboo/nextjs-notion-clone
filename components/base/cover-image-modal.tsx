@@ -28,7 +28,12 @@ const CoverImageModal = () => {
       setFile(file);
 
       const res = await edgestore.publicFiles.upload({
-        file
+        file, 
+        options: {
+          ...(coverImageHook.url && {
+            replaceTargetUrl: coverImageHook.url
+          })
+        }
       });
 
       await update({
