@@ -1,19 +1,25 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+
 import { useUser } from "@clerk/clerk-react";
-import { PlusCircle } from "lucide-react";
-import { Button } from "@/components/ui/button"; 
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { createDocument } from "../../_api/documents";
 
+import { PlusCircle } from "lucide-react";
+import { Button } from "@/components/ui/button"; 
+
 const DocumentsPage = () => {
+  const router = useRouter();
   const { user }  = useUser();
 
   const create = useMutation(api.documents.create);
   const onCreate = () => {
-    createDocument(create)
+    createDocument(create).then((documentId) => {
+      router.push(`/documents/${documentId}`);
+    });
   }
 
   return (

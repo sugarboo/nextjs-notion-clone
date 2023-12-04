@@ -2,9 +2,9 @@ import { Doc, Id } from "@/convex/_generated/dataModel";
 import { toast } from "sonner";
 
 const createDocument = (create: Function, document?: Partial<Doc<"documents">>) => {
-  const promise = create({
+  const promise: Promise<Id<"documents">> = create({
     ...document,
-    title: `Untitled - ${Math.floor(Math.random() * 9000) + 1000}`
+    title: "Untitled"
   })
   
   toast.promise(promise, {

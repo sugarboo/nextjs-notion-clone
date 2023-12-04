@@ -56,10 +56,12 @@ const NavItem = ({
   const onCreate = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
     if(!id) return
-    createDocument(create, { parentDocument: id }).then(() => {
+    createDocument(create, { parentDocument: id }).then((documentId) => {
       if (!expanded) {
         onExpand?.();
       }
+
+      router.push(`/documents/${documentId}`)
     });
   }
 
@@ -69,7 +71,9 @@ const NavItem = ({
 
     if (!id) return
 
-    archiveDocument(archive, id);
+    archiveDocument(archive, id).then(() => {
+      router.push("/documents");
+    });
   }
 
   const handleExpand = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

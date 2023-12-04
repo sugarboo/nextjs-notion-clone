@@ -12,6 +12,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { Button } from "../ui/button";
 import { ImageIcon, X } from "lucide-react";
 import { useEdgeStore } from "@/lib/edgestore";
+import { Skeleton } from "../ui/skeleton";
 
 interface CoverImageProps {
   url?: string,
@@ -88,5 +89,11 @@ const CoverImage = ({
     </div>
   );
 }
+
+const CoverImageSkeleton = () => (
+  <Skeleton className="w-full h-[12vh]" />
+)
+
+CoverImage.Skeleton = CoverImageSkeleton;
  
 export default CoverImage;
